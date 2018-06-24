@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Node<T> {
+public abstract class Node<T> {
 
     protected class Connection{
         String label;
@@ -21,6 +21,8 @@ public class Node<T> {
 
     public Node(String label, String id) {
         this.label = label;
+        if(label.equals(""))
+            this.label = id;
         this.id = id;
         data = null;
         connections = new HashMap<>();
@@ -44,6 +46,8 @@ public class Node<T> {
     }
 
     public void addConnection(Node node, String label){
+        if(label.equals(""))
+            label = "Ratko";
         connections.put(node.id, new Connection(label, node));
         numOfConnections++;
     }

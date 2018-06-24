@@ -1,57 +1,88 @@
-import com.sun.javaws.util.JfxHelper;
-
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-public class Main {
-
+public class Main extends JFrame{
+    public static final Color nodeColor = new Color(56,142,60);
+    public static final Color connectionColor = new Color(139,195,74);
+    public static final Color textColor = new Color(0,0,0);
     public static final JFileChooser fileChooser = new JFileChooser();
-    public static Graph graph = new Graph();
+    public static Graph graph;
+    public static boolean graphInited = false;
 
-    private static void createWindow() {
+    public Main() {
+        super("Graph Visualiser");
+        createWindow();
+        setVisible(true);
+    }
 
-            JFrame frame = new JFrame("Graph Visualiser");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
-            frame.setBounds(0,0,800, 600);
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            frame.getContentPane().add(textLabel, BorderLayout.CENTER);
-            addMenu(frame);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+    private void createWindow() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        graph = new Graph(nodeColor, connectionColor, textColor);
+        mainPanel.add(graph, "Center");
+        graphInited = true;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel textLabel = new JLabel("I'm a label in the window",SwingConstants.CENTER);
+        setBounds(0,0,800, 600);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        getContentPane().add(textLabel, BorderLayout.CENTER);
+        addMenuBar(this);
+        getContentPane().add(mainPanel);
+        setLocationRelativeTo(null);
+    }
+
+        private void addMenuBar(JFrame frame){
+            JMenuBar menuBar = new JMenuBar();
+            addFileMenu(menuBar, frame);
+            addNodeMenu(menuBar, frame);
+            frame.setJMenuBar(menuBar);
         }
 
-        private static void addMenu(JFrame frame){
-            JMenuBar menuBar = new JMenuBar();
+        public void addNodeMenu(JMenuBar menuBar, JFrame frame){
+            JMenu menuNode = new JMenu("Node");
+            menuBar.add(menuNode);
+            JMenuItem removeNode = new JMenuItem("Delete Node");
+            removeNode.addActionListener(e -> graph.removeSelectedNode());
+            removeNode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
+
+            JMenuItem addNode = new JMenuItem("Add Node");
+            addNode.addActionListener(e->{
+                String newLabel = JOptionPane.showInputDialog(frame,"Unesite labelu novog cvora", null);
+                String newId = JOptionPane.showInputDialog(frame,"Unesite id novog cvora", null);
+                graph.addNode(new VisualNode(newLabel, newId));
+                repaint();
+            });
+            addNode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+            menuNode.add(addNode);
+            menuNode.add(removeNode);
+        }
+
+        public void addFileMenu(JMenuBar menuBar, JFrame frame){
             JMenu menuFile = new JMenu("File");
             menuBar.add(menuFile);
-
             final GMLFileReader gmlFileReader = new GMLFileReader();
             addMenuItemFileOpener(gmlFileReader, frame, menuFile, "GML", KeyEvent.VK_G);
             final CSVFileReader csvFileReader = new CSVFileReader();
             addMenuItemFileOpener(csvFileReader, frame, menuFile, "CSV", KeyEvent.VK_C);
-            frame.setJMenuBar(menuBar);
+            JMenuItem draw = new JMenuItem("Draw Graph");
+            draw.addActionListener(e->graph.repaint());
+            draw.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
+            menuFile.add(draw);
         }
 
-        public static void addMenuItemFileOpener(IGraphFileReader fileReader, JFrame frame, JMenu menu, String label, int keyEvent){
+        public void addMenuItemFileOpener(IGraphFileReader fileReader, JFrame frame, JMenu menu, String label, int keyEvent){
             String TitleLabel = "Open " + label + " File";
-            JMenuItem open = new JMenuItem(label);
+            JMenuItem open = new JMenuItem(TitleLabel);
             open.setAccelerator(KeyStroke.getKeyStroke(keyEvent, InputEvent.CTRL_MASK));
-            open.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+            open.addActionListener(e -> {
                     fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                     FileNameExtensionFilter filter = new FileNameExtensionFilter(
                             label.toUpperCase()+" & TXT Files", label.toLowerCase(), "txt");
                     fileChooser.setFileFilter(filter);
-                    fileChooser.setDialogTitle(label);
+                    fileChooser.setDialogTitle(TitleLabel);
                     if(fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
                         try {
                             fileReader.read(graph, fileChooser.getSelectedFile().getAbsolutePath());
@@ -60,12 +91,12 @@ public class Main {
                         }
                     }
                 }
-            });
+            );
             menu.add(open);
         }
 
         public static void main(String[] args) {
-            createWindow();
+            new Main();
         }
     }
 

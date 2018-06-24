@@ -26,7 +26,7 @@ public class GMLFileReader implements IGraphFileReader {
                 label = readByPattern(bufferedReader, labelPattern);
 
                 if(graph.getNodeById(id)==null)
-                    graph.addNode(new Node(label,id));
+                    graph.addNode(new VisualNode(label,id));
             }
             if (line.contains("edge")){
                 bufferedReader.readLine(); // skips [ line
@@ -36,8 +36,8 @@ public class GMLFileReader implements IGraphFileReader {
 
                 System.out.println(source + " " + target + " " + label);
 
-                Node sourceNode = graph.getNodeById(source);
-                Node targetNode = graph.getNodeById(target);
+                VisualNode sourceNode = graph.getNodeById(source);
+                VisualNode targetNode = graph.getNodeById(target);
 
                 graph.addConnection(sourceNode, targetNode, label);
             }

@@ -26,16 +26,16 @@ public class CSVFileReader implements IGraphFileReader {
     }
 
     private void parseLine(Graph graph, String line){
-        Node sourceNode, targetNode;
+        VisualNode sourceNode, targetNode;
         String[] row = line.split(";");
         if((sourceNode = graph.getNodeById(row[0]))==null) {
-            sourceNode = new Node(label, row[0]);
+            sourceNode = new VisualNode(label, row[0]);
             graph.addNode(sourceNode);
         }
 
         for(int i = 1; i<row.length; i++){
             if((targetNode = graph.getNodeById(row[i]))==null) {
-                targetNode = new Node(label, row[i]);
+                targetNode = new VisualNode(label, row[i]);
                 graph.addNode(targetNode);
             }
             graph.addConnection(sourceNode, targetNode, label);
@@ -46,15 +46,15 @@ public class CSVFileReader implements IGraphFileReader {
         nodeIds = line.split(";");
         System.out.println(line);
         for(String s:nodeIds)
-            graph.addNode(new Node(label,s));
+            graph.addNode(new VisualNode(label,s));
     }
 
     private void readEdge(Graph graph, String line){
         String[] row = line.split(";");
-        Node sourceNode = graph.getNodeById(row[0]);
+        VisualNode sourceNode = graph.getNodeById(row[0]);
         for(int i = 1; i<row.length; i++){
             if(row[i].equals("1")){
-                Node targetNode = graph.getNodeById(nodeIds[i]);
+                VisualNode targetNode = graph.getNodeById(nodeIds[i-1]);
                 graph.addConnection(sourceNode,targetNode, label);
             }
         }
