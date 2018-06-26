@@ -1,23 +1,25 @@
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public abstract class Node<T> {
+public class Node<T> {
 
-    protected class Connection{
-        String label;
-        Node node;
-
-        public Connection(String label, Node neighbour) {
-            this.label = label;
-            this.node = neighbour;
-        }
-    }
-
+    public HashMap<String, Connection> connections;
     protected String label;
     protected String id;
     protected T data;
     protected int numOfConnections = 0;
-    protected HashMap<String, Connection> connections;
+    private double size = 5;
+    private int x;
+    private int y;
+    private int diameter;
+    private Ellipse2D.Double circle;
+    private Color nodeColor;
+    private Color textColor;
+    private Color connectionColor;
+    private boolean showingPath;
+    private boolean selected = false;
 
     public Node(String label, String id) {
         this.label = label;
@@ -26,11 +28,153 @@ public abstract class Node<T> {
         this.id = id;
         data = null;
         connections = new HashMap<>();
+        x = (int) (Math.random()*1300);
+        y = (int) (Math.random()*700);
+        diameter = (int) (size*5);
+        circle = new Ellipse2D.Double(x+diameter/2, y+diameter/2, diameter, diameter);
     }
 
-    public Node(String label, String id, T data){
-        this(label, id);
-        this.data = data;
+    public static LinkedList<Node> shortestPathBetweenNodes(Node sourceNode, Node targetNode){
+        if(sourceNode == targetNode) return null;
+        HashMap<Node, Node> allPaths = new HashMap<>();
+        LinkedList<Node> path = new LinkedList<>();
+        LinkedList<Node> queue = new LinkedList<>();
+        allPaths.put(sourceNode, null);
+        for(Object connection: sourceNode.connections.values()) {
+            if (((Connection) connection).getTargetNode() == targetNode) {
+                path.addFirst(sourceNode);
+                path.addLast(((Connection) connection).getTargetNode());
+                return path;
+            }
+            else {
+                queue.add(((Connection) connection).getTargetNode());
+                allPaths.put(((Connection) connection).getTargetNode(), sourceNode);
+            }
+        }
+
+        while(!queue.isEmpty()){
+            Node curr = queue.removeFirst();
+            for (Object connection: curr.connections.values()){
+                 if(((Connection)connection).getTargetNode() == targetNode){
+                     allPaths.put(((Connection) connection).getTargetNode(), curr);
+                     curr = ((Connection) connection).getTargetNode();
+                     path.addFirst(curr);
+                     while(allPaths.get(curr)!=null){
+                         curr = allPaths.get(curr);
+                         path.addFirst(curr);
+                     }
+                     return path;
+                 }
+                 else{
+                     queue.add(((Connection) connection).getTargetNode());
+                     allPaths.put(((Connection) connection).getTargetNode(), curr);
+                 }
+            }
+        }
+        return path;
+    }
+
+    public void drawNode(Graphics2D g){
+        Color drawColor = nodeColor;
+        if(selected)
+            drawColor = Color.red;
+        if(showingPath)
+            drawColor = Color.blue;
+        int d = (int) (diameter+numOfConnections*size);
+        circle = new Ellipse2D.Double(x - d/2, y - d/2, d, d);
+        g.setColor(drawColor);
+        g.fill(circle);
+        g.setColor(textColor);
+        g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        g.drawString(label, x-diameter/2-label.length(), y-diameter/2+30/2);
+    }
+
+    public void drawConnections(Graphics2D g){
+        for(Object connection: connections.values()){
+            Connection.drawConnection(g, (Connection) connection, showingPath);
+        }
+    }
+
+    public Ellipse2D.Double getCircle() {
+        return circle;
+    }
+
+    public void setCircle(Ellipse2D.Double circle) {
+        this.circle = circle;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(int diameter) {
+        this.diameter = diameter;
+    }
+
+    public void changeDiameter(boolean inc){
+        if(inc)
+            diameter++;
+        else{
+            diameter--;
+            if(diameter<1)
+                diameter = 1;
+        }
+    }
+
+    public Color getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(Color textColor) {
+        this.textColor = textColor;
+    }
+
+    public Color getNodeColor() {
+        return nodeColor;
+    }
+
+    public void setNodeColor(Color nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public Color getConnectionColor() {
+        return connectionColor;
+    }
+
+    public void setConnectionColor(Color connectionColor) {
+        this.connectionColor = connectionColor;
+    }
+
+    public boolean isShowingPath() {
+        return showingPath;
+    }
+
+    public void setShowingPath(boolean showingPath) {
+        this.showingPath = showingPath;
     }
 
     public String getLabel() {
@@ -45,14 +189,27 @@ public abstract class Node<T> {
         return id;
     }
 
-    public void addConnection(Node node, String label){
-        if(label.equals(""))
-            label = "Ratko";
-        connections.put(node.id, new Connection(label, node));
+    public boolean isConnected(Node node){
+        for(Connection connection : connections.values()){
+            if(connection.getTargetNode()==node)
+                return true;
+        }
+        return false;
+    }
+
+    public void addConnection(Node sourceNode, Node targetNode, String la){
+        if(la.equals(""))
+            la = "Ratko";
+        connections.put(targetNode.id, new Connection(la, sourceNode,  targetNode));
+        connections.get(targetNode.id).setColor(connectionColor);
         numOfConnections++;
     }
 
     public void removeConnection(Node node){
+        if(node.isConnected(this)){
+            node.connections.remove(this.id);
+            node.connections.put(this.id, new Connection("",node, this));
+        }
         connections.remove(node.id);
         numOfConnections--;
     }
@@ -62,49 +219,11 @@ public abstract class Node<T> {
     }
 
     public String getConnectionLabel(Node node){
-        return connections.get(node.id).label;
+        return connections.get(node.id).getLabel();
     }
 
     public void setConnectionLabel(Node node,String label){
-        connections.get(node.id).label = label;
-    }
-
-    public static LinkedList<Node> shortestPathBetweenNodes(Node sourceNode, Node targetNode){
-        HashMap<Node, Node> allPaths = new HashMap<>();
-        LinkedList<Node> path = new LinkedList<>();
-        LinkedList<Node> queue = new LinkedList<>();
-        allPaths.put(sourceNode, null);
-        path.add(sourceNode);
-        for(Object connection: sourceNode.connections.values()) {
-            if (((Node.Connection) connection).node == targetNode) {
-                path.addLast(((Node.Connection) connection).node);
-                return path;
-            }
-            else {
-                queue.add(((Node.Connection) connection).node);
-                allPaths.put(((Node.Connection) connection).node, sourceNode);
-            }
-        }
-
-        while(!queue.isEmpty()){
-            Node curr = queue.removeFirst();
-            for (Object connection: curr.connections.values()){
-                 if(((Node.Connection)connection).node == targetNode){
-                     curr = ((Node.Connection) connection).node;
-                     path.addFirst(curr);
-                     while(curr!=null){
-                         curr = allPaths.get(curr);
-                         path.addFirst(curr);
-                     }
-                     return path;
-                 }
-                 else{
-                     queue.add(((Node.Connection) connection).node);
-                     allPaths.put(((Node.Connection) connection).node, curr);
-                 }
-            }
-        }
-        return path;
+        connections.get(node.id).setLabel(label);
     }
 }
 

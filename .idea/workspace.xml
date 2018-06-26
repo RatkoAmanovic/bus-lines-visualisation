@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41437ed3-e46c-44c5-a58e-f6f9dbe87130" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Scene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Connection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CSVFileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSVFileReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GMLFileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GMLFileReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VisualGraph.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VisualNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VisualNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/VisualNode.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,21 +21,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/bus_lines_visualisation$Main.ic" NAME="Main Coverage Results" MODIFIED="1529861095216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/bus_lines_visualisation$Main.ic" NAME="Main Coverage Results" MODIFIED="1529943006280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
+            <state relative-caret-position="-47">
+              <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
               <folding>
-                <element signature="method#addMenuBar#0;class#Main#0" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#8353#8354#0" expanded="true" />
+                <element signature="e#8387#8388#0" expanded="true" />
+                <element signature="method#addConectionMenu#0;class#Main#0" />
+                <element signature="method#addChangeNodeColor#0;class#Main#0" />
+                <element signature="method#addNodeMenu#0;class#Main#0" />
+                <element signature="method#addChangeConnectionSize#0;class#Main#0" />
+                <element signature="method#addChangeNodeSize#0;class#Main#0" />
+                <element signature="method#addChangeNodeColor#0;class#Main#0" />
+                <element signature="method#addConnectionMenuItem#0;class#Main#0" />
+                <element signature="method#addShowPathMenuItem#0;class#Main#0" />
+                <element signature="method#addComboBoxToOptionPane#0;class#Main#0" />
                 <element signature="method#addFileMenu#0;class#Main#0" />
                 <element signature="method#addMenuItemFileOpener#0;class#Main#0" />
-                <element signature="e#4049#4050#0" expanded="true" />
-                <element signature="e#4083#4084#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,42 +53,99 @@
       <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="49" column="28" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="28" />
+            <state relative-caret-position="131">
+              <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#Node#1;class#Node#0" />
-                <element signature="method#removeConnection#0;class#Node#0" />
+                <element signature="e#548#819#0" />
                 <element signature="method#shortestPathBetweenNodes#0;class#Node#0" />
+                <element signature="e#777#1317#0" />
+                <element signature="method#isConnected#0;class#Node#0" />
+                <element signature="method#removeConnection#0;class#Node#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VisualNode.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/VisualNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="53" column="80" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#drawConnections#0;class#VisualNode#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Graph.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Graph.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="137" column="65" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
+            <state relative-caret-position="143">
+              <caret line="242" column="27" selection-start-line="242" selection-start-column="27" selection-end-line="242" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="class#Actions#0;class#Graph#0" />
                 <element signature="class#Action#0;class#Graph#0" />
-                <element signature="e#4651#4652#0" expanded="true" />
-                <element signature="e#4683#4684#0" expanded="true" />
+                <element signature="method#Graph#0;class#Graph#0" />
+                <element signature="method#getNodeIds#0;class#Graph#0" />
+                <element signature="method#addNode#0;class#Graph#0" />
+                <element signature="method#removeNodeFromConnections#0;class#Graph#0" />
+                <element signature="method#removeSelectedNode#0;class#Graph#0" />
+                <element signature="method#getSelectedNode#0;class#Graph#0" />
+                <element signature="method#getSelectedConnection#0;class#Graph#0" />
+                <element signature="method#removeSelectedConnection#0;class#Graph#0" />
+                <element signature="method#addConnection#1;class#Graph#0" />
+                <element signature="method#removeConnection#0;class#Graph#0" />
+                <element signature="method#shortestPathBetweenNodes#0;class#Graph#0" />
+                <element signature="e#5798#5799#0" expanded="true" />
+                <element signature="e#5827#5828#0" expanded="true" />
+                <element signature="e#7653#7978#0" />
+                <element signature="method#mouseMoved#0;class#Graph#0" />
+                <element signature="method#mouseEntered#0;class#Graph#0" />
+                <element signature="method#mouseExited#0;class#Graph#0" />
+                <element signature="e#8742#8743#0" expanded="true" />
+                <element signature="e#8776#8777#0" expanded="true" />
+                <element signature="e#8831#8832#0" expanded="true" />
+                <element signature="e#8877#8878#0" expanded="true" />
+                <element signature="e#8910#8911#0" expanded="true" />
+                <element signature="e#8939#8940#0" expanded="true" />
+                <element signature="e#8984#8985#0" expanded="true" />
+                <element signature="e#9020#9021#0" expanded="true" />
+                <element signature="e#8383#8899#0" />
+                <element signature="e#8905#9268#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Connection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Connection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1071">
+              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#608#609#0" expanded="true" />
+                <element signature="e#636#637#0" expanded="true" />
+                <element signature="e#677#678#0" expanded="true" />
+                <element signature="e#711#712#0" expanded="true" />
+                <element signature="e#746#747#0" expanded="true" />
+                <element signature="e#778#779#0" expanded="true" />
+                <element signature="e#827#828#0" expanded="true" />
+                <element signature="e#869#870#0" expanded="true" />
+                <element signature="e#1855#1856#0" expanded="true" />
+                <element signature="e#1883#1884#0" expanded="true" />
+                <element signature="method#changeWidth#0;class#Connection#0" />
+                <element signature="e#1996#1997#0" expanded="true" />
+                <element signature="e#2027#2028#0" expanded="true" />
+                <element signature="e#2076#2077#0" expanded="true" />
+                <element signature="e#2116#2117#0" expanded="true" />
+                <element signature="e#2148#2149#0" expanded="true" />
+                <element signature="e#2176#2177#0" expanded="true" />
+                <element signature="e#2218#2219#0" expanded="true" />
+                <element signature="e#2252#2253#0" expanded="true" />
+                <element signature="e#2295#2296#0" expanded="true" />
+                <element signature="e#2322#2323#0" expanded="true" />
+                <element signature="e#2374#2375#0" expanded="true" />
+                <element signature="e#2406#2407#0" expanded="true" />
+                <element signature="e#2441#2442#0" expanded="true" />
+                <element signature="e#2474#2475#0" expanded="true" />
+                <element signature="e#2524#2525#0" expanded="true" />
+                <element signature="e#2568#2569#0" expanded="true" />
+                <element signature="e#2603#2604#0" expanded="true" />
+                <element signature="e#2636#2637#0" expanded="true" />
+                <element signature="e#2686#2687#0" expanded="true" />
+                <element signature="e#2730#2731#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,6 +166,12 @@
       <find>NOde</find>
       <find>Node</find>
       <find>removeNo</find>
+      <find>remove</find>
+      <find>label</find>
+      <find>shorte</find>
+      <find>cir</find>
+      <find>iterato</find>
+      <find>addConn</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -113,13 +185,14 @@
         <option value="$PROJECT_DIR$/src/GraphFileReader.java" />
         <option value="$PROJECT_DIR$/src/IGraphFileReader.java" />
         <option value="$PROJECT_DIR$/src/VisualGraph.java" />
-        <option value="$PROJECT_DIR$/src/GMLFileReader.java" />
         <option value="$PROJECT_DIR$/src/Scene.java" />
+        <option value="$PROJECT_DIR$/src/VisualNode.java" />
         <option value="$PROJECT_DIR$/src/CSVFileReader.java" />
+        <option value="$PROJECT_DIR$/src/GMLFileReader.java" />
+        <option value="$PROJECT_DIR$/src/Node.java" />
+        <option value="$PROJECT_DIR$/src/Connection.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/Graph.java" />
-        <option value="$PROJECT_DIR$/src/Node.java" />
-        <option value="$PROJECT_DIR$/src/VisualNode.java" />
       </list>
     </option>
   </component>
@@ -133,10 +206,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="20" />
-    <option name="width" value="1346" />
-    <option name="height" value="728" />
+    <option name="x" value="676" />
+    <option name="width" value="697" />
+    <option name="height" value="775" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -144,9 +216,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -163,11 +232,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -208,7 +282,9 @@
       <workItem from="1529584365107" duration="11576000" />
       <workItem from="1529745729760" duration="29415000" />
       <workItem from="1529829712914" duration="15795000" />
-      <workItem from="1529853002660" duration="14034000" />
+      <workItem from="1529853002660" duration="14094000" />
+      <workItem from="1529912575352" duration="27124000" />
+      <workItem from="1529993083635" duration="21280000" />
     </task>
     <task id="LOCAL-00001" summary="Drugi">
       <created>1529584607167</created>
@@ -224,11 +300,18 @@
       <option name="project" value="LOCAL" />
       <updated>1529834706548</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Visualisation, moving, adding and removing nodes on JPanel">
+      <created>1529875731418</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1529875731418</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70820000" />
+    <option name="totallyTimeSpent" value="119284000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -236,44 +319,44 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32884902" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32884902" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50073206" side_tool="true" weight="0.32884902" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32884902" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32884902" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32884902" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2203514" />
-      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32884902" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49926794" visible="true" weight="0.3542601" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32884902" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="3" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.14128843" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32884902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39910313" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.329429" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.329429" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32884902" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32884902" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.329429" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32884902" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.329429" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49926794" visible="true" weight="0.3542601" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2203514" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.14128843" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -284,16 +367,16 @@
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39910313" />
       <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32884902" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50073206" side_tool="true" weight="0.32884902" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32884902" />
-      <window_info id="Capture Tool" order="5" />
+      <window_info id="Capture Tool" order="6" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32884902" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info id="Favorites" order="5" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,32 +398,115 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Drugi" />
     <MESSAGE value="Reading CSV and GML graph files, started visual node and graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reading CSV and GML graph files, started visual node and graph" />
+    <MESSAGE value="Visualisation, moving, adding and removing nodes on JPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Visualisation, moving, adding and removing nodes on JPanel" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Graph.java</url>
-          <line>123</line>
+          <line>186</line>
           <properties />
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Node.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="27" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="28" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#548#819#0" />
+            <element signature="method#shortestPathBetweenNodes#0;class#Node#0" />
+            <element signature="e#777#1317#0" />
+            <element signature="method#isConnected#0;class#Node#0" />
+            <element signature="method#removeConnection#0;class#Node#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Graph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2091">
+          <caret line="137" column="65" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#Actions#0;class#Graph#0" />
+            <element signature="class#Action#0;class#Graph#0" />
+            <element signature="method#Graph#0;class#Graph#0" />
+            <element signature="method#getNodeIds#0;class#Graph#0" />
+            <element signature="method#addNode#0;class#Graph#0" />
+            <element signature="method#removeNodeFromConnections#0;class#Graph#0" />
+            <element signature="method#removeSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedConnection#0;class#Graph#0" />
+            <element signature="method#removeSelectedConnection#0;class#Graph#0" />
+            <element signature="method#addConnection#1;class#Graph#0" />
+            <element signature="method#removeConnection#0;class#Graph#0" />
+            <element signature="method#shortestPathBetweenNodes#0;class#Graph#0" />
+            <element signature="e#5798#5799#0" expanded="true" />
+            <element signature="e#5827#5828#0" expanded="true" />
+            <element signature="e#7653#7978#0" />
+            <element signature="method#mouseMoved#0;class#Graph#0" />
+            <element signature="method#mouseEntered#0;class#Graph#0" />
+            <element signature="method#mouseExited#0;class#Graph#0" />
+            <element signature="e#8742#8743#0" expanded="true" />
+            <element signature="e#8776#8777#0" expanded="true" />
+            <element signature="e#8831#8832#0" expanded="true" />
+            <element signature="e#8877#8878#0" expanded="true" />
+            <element signature="e#8910#8911#0" expanded="true" />
+            <element signature="e#8939#8940#0" expanded="true" />
+            <element signature="e#8984#8985#0" expanded="true" />
+            <element signature="e#9020#9021#0" expanded="true" />
+            <element signature="e#8383#8899#0" />
+            <element signature="e#8905#9268#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/VisualNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="53" column="80" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#VisualNode#0;class#VisualNode#0" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="29" />
           <folding>
-            <element signature="method#addMenuBar#0;class#Main#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#8353#8354#0" expanded="true" />
+            <element signature="e#8387#8388#0" expanded="true" />
+            <element signature="method#addConectionMenu#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addNodeMenu#0;class#Main#0" />
+            <element signature="method#addChangeConnectionSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addConnectionMenuItem#0;class#Main#0" />
+            <element signature="method#addShowPathMenuItem#0;class#Main#0" />
+            <element signature="method#addComboBoxToOptionPane#0;class#Main#0" />
             <element signature="method#addFileMenu#0;class#Main#0" />
             <element signature="method#addMenuItemFileOpener#0;class#Main#0" />
-            <element signature="e#4049#4050#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -351,7 +517,9 @@
           <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#drawConnections#0;class#VisualNode#0" />
+            <element signature="method#VisualNode#0;class#VisualNode#0" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -364,8 +532,33 @@
             <element signature="imports" expanded="true" />
             <element signature="class#Actions#0;class#Graph#0" />
             <element signature="class#Action#0;class#Graph#0" />
-            <element signature="e#4651#4652#0" expanded="true" />
-            <element signature="e#4683#4684#0" expanded="true" />
+            <element signature="method#Graph#0;class#Graph#0" />
+            <element signature="method#getNodeIds#0;class#Graph#0" />
+            <element signature="method#addNode#0;class#Graph#0" />
+            <element signature="method#removeNodeFromConnections#0;class#Graph#0" />
+            <element signature="method#removeSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedConnection#0;class#Graph#0" />
+            <element signature="method#removeSelectedConnection#0;class#Graph#0" />
+            <element signature="method#addConnection#1;class#Graph#0" />
+            <element signature="method#removeConnection#0;class#Graph#0" />
+            <element signature="method#shortestPathBetweenNodes#0;class#Graph#0" />
+            <element signature="e#5798#5799#0" expanded="true" />
+            <element signature="e#5827#5828#0" expanded="true" />
+            <element signature="e#7653#7978#0" />
+            <element signature="method#mouseMoved#0;class#Graph#0" />
+            <element signature="method#mouseEntered#0;class#Graph#0" />
+            <element signature="method#mouseExited#0;class#Graph#0" />
+            <element signature="e#8742#8743#0" expanded="true" />
+            <element signature="e#8776#8777#0" expanded="true" />
+            <element signature="e#8831#8832#0" expanded="true" />
+            <element signature="e#8877#8878#0" expanded="true" />
+            <element signature="e#8910#8911#0" expanded="true" />
+            <element signature="e#8939#8940#0" expanded="true" />
+            <element signature="e#8984#8985#0" expanded="true" />
+            <element signature="e#9020#9021#0" expanded="true" />
+            <element signature="e#8383#8899#0" />
+            <element signature="e#8905#9268#0" />
           </folding>
         </state>
       </provider>
@@ -375,11 +568,20 @@
         <state relative-caret-position="833">
           <caret line="49" column="32" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="32" />
           <folding>
-            <element signature="method#addMenuBar#0;class#Main#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#8353#8354#0" expanded="true" />
+            <element signature="e#8387#8388#0" expanded="true" />
+            <element signature="method#addConectionMenu#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addNodeMenu#0;class#Main#0" />
+            <element signature="method#addChangeConnectionSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addConnectionMenuItem#0;class#Main#0" />
+            <element signature="method#addShowPathMenuItem#0;class#Main#0" />
+            <element signature="method#addComboBoxToOptionPane#0;class#Main#0" />
             <element signature="method#addFileMenu#0;class#Main#0" />
             <element signature="method#addMenuItemFileOpener#0;class#Main#0" />
-            <element signature="e#4049#4050#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -390,11 +592,11 @@
           <caret line="19" column="52" lean-forward="true" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#Node#0;class#Node#0" />
-            <element signature="method#Node#1;class#Node#0" />
-            <element signature="method#addConnection#0;class#Node#0" />
-            <element signature="method#removeConnection#0;class#Node#0" />
+            <element signature="e#548#819#0" />
             <element signature="method#shortestPathBetweenNodes#0;class#Node#0" />
+            <element signature="e#777#1317#0" />
+            <element signature="method#isConnected#0;class#Node#0" />
+            <element signature="method#removeConnection#0;class#Node#0" />
           </folding>
         </state>
       </provider>
@@ -417,8 +619,33 @@
             <element signature="imports" expanded="true" />
             <element signature="class#Actions#0;class#Graph#0" />
             <element signature="class#Action#0;class#Graph#0" />
-            <element signature="e#4651#4652#0" expanded="true" />
-            <element signature="e#4683#4684#0" expanded="true" />
+            <element signature="method#Graph#0;class#Graph#0" />
+            <element signature="method#getNodeIds#0;class#Graph#0" />
+            <element signature="method#addNode#0;class#Graph#0" />
+            <element signature="method#removeNodeFromConnections#0;class#Graph#0" />
+            <element signature="method#removeSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedConnection#0;class#Graph#0" />
+            <element signature="method#removeSelectedConnection#0;class#Graph#0" />
+            <element signature="method#addConnection#1;class#Graph#0" />
+            <element signature="method#removeConnection#0;class#Graph#0" />
+            <element signature="method#shortestPathBetweenNodes#0;class#Graph#0" />
+            <element signature="e#5798#5799#0" expanded="true" />
+            <element signature="e#5827#5828#0" expanded="true" />
+            <element signature="e#7653#7978#0" />
+            <element signature="method#mouseMoved#0;class#Graph#0" />
+            <element signature="method#mouseEntered#0;class#Graph#0" />
+            <element signature="method#mouseExited#0;class#Graph#0" />
+            <element signature="e#8742#8743#0" expanded="true" />
+            <element signature="e#8776#8777#0" expanded="true" />
+            <element signature="e#8831#8832#0" expanded="true" />
+            <element signature="e#8877#8878#0" expanded="true" />
+            <element signature="e#8910#8911#0" expanded="true" />
+            <element signature="e#8939#8940#0" expanded="true" />
+            <element signature="e#8984#8985#0" expanded="true" />
+            <element signature="e#9020#9021#0" expanded="true" />
+            <element signature="e#8383#8899#0" />
+            <element signature="e#8905#9268#0" />
           </folding>
         </state>
       </provider>
@@ -428,11 +655,20 @@
         <state relative-caret-position="51">
           <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
           <folding>
-            <element signature="method#addMenuBar#0;class#Main#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#8353#8354#0" expanded="true" />
+            <element signature="e#8387#8388#0" expanded="true" />
+            <element signature="method#addConectionMenu#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addNodeMenu#0;class#Main#0" />
+            <element signature="method#addChangeConnectionSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addConnectionMenuItem#0;class#Main#0" />
+            <element signature="method#addShowPathMenuItem#0;class#Main#0" />
+            <element signature="method#addComboBoxToOptionPane#0;class#Main#0" />
             <element signature="method#addFileMenu#0;class#Main#0" />
             <element signature="method#addMenuItemFileOpener#0;class#Main#0" />
-            <element signature="e#4049#4050#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -443,11 +679,11 @@
           <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#Node#0;class#Node#0" />
-            <element signature="method#Node#1;class#Node#0" />
-            <element signature="method#addConnection#0;class#Node#0" />
-            <element signature="method#removeConnection#0;class#Node#0" />
+            <element signature="e#548#819#0" />
             <element signature="method#shortestPathBetweenNodes#0;class#Node#0" />
+            <element signature="e#777#1317#0" />
+            <element signature="method#isConnected#0;class#Node#0" />
+            <element signature="method#removeConnection#0;class#Node#0" />
           </folding>
         </state>
       </provider>
@@ -471,13 +707,6 @@
     <entry file="file://$PROJECT_DIR$/src/Proba.java" />
     <entry file="file://$PROJECT_DIR$/src/INode.java" />
     <entry file="file://$PROJECT_DIR$/src/VisualGraph.java" />
-    <entry file="file://$PROJECT_DIR$/src/IGraphFileReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/jre/lib/rt.jar!/sun/java2d/SunGraphics2D.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
@@ -531,12 +760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
           <caret line="266" selection-start-line="266" selection-end-line="266" />
-          <folding>
-            <element signature="e#3677#3678#0" expanded="true" />
-            <element signature="e#3726#3727#0" expanded="true" />
-            <element signature="e#6935#6936#0" expanded="true" />
-            <element signature="e#6966#6967#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -640,6 +863,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="1470" selection-start-line="1470" selection-end-line="1470" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/VisualNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#VisualNode#0;class#VisualNode#0" />
+            <element signature="e#3060#3061#0" expanded="true" />
+            <element signature="e#3102#3103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Scene.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -650,78 +893,151 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/CSVFileReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/IGraphFileReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GMLFileReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
-          <caret line="39" column="26" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSVFileReader.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/awt/event/ActionListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/util/HashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="1470" selection-start-line="1470" selection-end-line="1470" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Graph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="137" column="65" selection-start-line="137" selection-start-column="65" selection-end-line="137" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Actions#0;class#Graph#0" />
-            <element signature="class#Action#0;class#Graph#0" />
-            <element signature="e#4651#4652#0" expanded="true" />
-            <element signature="e#4683#4684#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="271">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="58" column="34" selection-start-line="58" selection-start-column="34" selection-end-line="58" selection-end-column="34" />
+        <state relative-caret-position="-47">
+          <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
           <folding>
-            <element signature="method#addMenuBar#0;class#Main#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#8353#8354#0" expanded="true" />
+            <element signature="e#8387#8388#0" expanded="true" />
+            <element signature="method#addConectionMenu#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addNodeMenu#0;class#Main#0" />
+            <element signature="method#addChangeConnectionSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeSize#0;class#Main#0" />
+            <element signature="method#addChangeNodeColor#0;class#Main#0" />
+            <element signature="method#addConnectionMenuItem#0;class#Main#0" />
+            <element signature="method#addShowPathMenuItem#0;class#Main#0" />
+            <element signature="method#addComboBoxToOptionPane#0;class#Main#0" />
             <element signature="method#addFileMenu#0;class#Main#0" />
             <element signature="method#addMenuItemFileOpener#0;class#Main#0" />
-            <element signature="e#4049#4050#0" expanded="true" />
-            <element signature="e#4083#4084#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#608#609#0" expanded="true" />
+            <element signature="e#636#637#0" expanded="true" />
+            <element signature="e#677#678#0" expanded="true" />
+            <element signature="e#711#712#0" expanded="true" />
+            <element signature="e#746#747#0" expanded="true" />
+            <element signature="e#778#779#0" expanded="true" />
+            <element signature="e#827#828#0" expanded="true" />
+            <element signature="e#869#870#0" expanded="true" />
+            <element signature="e#1855#1856#0" expanded="true" />
+            <element signature="e#1883#1884#0" expanded="true" />
+            <element signature="method#changeWidth#0;class#Connection#0" />
+            <element signature="e#1996#1997#0" expanded="true" />
+            <element signature="e#2027#2028#0" expanded="true" />
+            <element signature="e#2076#2077#0" expanded="true" />
+            <element signature="e#2116#2117#0" expanded="true" />
+            <element signature="e#2148#2149#0" expanded="true" />
+            <element signature="e#2176#2177#0" expanded="true" />
+            <element signature="e#2218#2219#0" expanded="true" />
+            <element signature="e#2252#2253#0" expanded="true" />
+            <element signature="e#2295#2296#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
+            <element signature="e#2374#2375#0" expanded="true" />
+            <element signature="e#2406#2407#0" expanded="true" />
+            <element signature="e#2441#2442#0" expanded="true" />
+            <element signature="e#2474#2475#0" expanded="true" />
+            <element signature="e#2524#2525#0" expanded="true" />
+            <element signature="e#2568#2569#0" expanded="true" />
+            <element signature="e#2603#2604#0" expanded="true" />
+            <element signature="e#2636#2637#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+            <element signature="e#2730#2731#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="49" column="28" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="28" />
+        <state relative-caret-position="131">
+          <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#Node#1;class#Node#0" />
-            <element signature="method#removeConnection#0;class#Node#0" />
+            <element signature="e#548#819#0" />
             <element signature="method#shortestPathBetweenNodes#0;class#Node#0" />
+            <element signature="e#777#1317#0" />
+            <element signature="method#isConnected#0;class#Node#0" />
+            <element signature="method#removeConnection#0;class#Node#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/VisualNode.java">
+    <entry file="file://$PROJECT_DIR$/src/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="53" column="80" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
+        <state relative-caret-position="143">
+          <caret line="242" column="27" selection-start-line="242" selection-start-column="27" selection-end-line="242" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#drawConnections#0;class#VisualNode#0" />
+            <element signature="class#Actions#0;class#Graph#0" />
+            <element signature="class#Action#0;class#Graph#0" />
+            <element signature="method#Graph#0;class#Graph#0" />
+            <element signature="method#getNodeIds#0;class#Graph#0" />
+            <element signature="method#addNode#0;class#Graph#0" />
+            <element signature="method#removeNodeFromConnections#0;class#Graph#0" />
+            <element signature="method#removeSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedNode#0;class#Graph#0" />
+            <element signature="method#getSelectedConnection#0;class#Graph#0" />
+            <element signature="method#removeSelectedConnection#0;class#Graph#0" />
+            <element signature="method#addConnection#1;class#Graph#0" />
+            <element signature="method#removeConnection#0;class#Graph#0" />
+            <element signature="method#shortestPathBetweenNodes#0;class#Graph#0" />
+            <element signature="e#5798#5799#0" expanded="true" />
+            <element signature="e#5827#5828#0" expanded="true" />
+            <element signature="e#7653#7978#0" />
+            <element signature="method#mouseMoved#0;class#Graph#0" />
+            <element signature="method#mouseEntered#0;class#Graph#0" />
+            <element signature="method#mouseExited#0;class#Graph#0" />
+            <element signature="e#8742#8743#0" expanded="true" />
+            <element signature="e#8776#8777#0" expanded="true" />
+            <element signature="e#8831#8832#0" expanded="true" />
+            <element signature="e#8877#8878#0" expanded="true" />
+            <element signature="e#8910#8911#0" expanded="true" />
+            <element signature="e#8939#8940#0" expanded="true" />
+            <element signature="e#8984#8985#0" expanded="true" />
+            <element signature="e#9020#9021#0" expanded="true" />
+            <element signature="e#8383#8899#0" />
+            <element signature="e#8905#9268#0" />
           </folding>
         </state>
       </provider>
