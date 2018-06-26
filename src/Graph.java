@@ -9,20 +9,6 @@ import java.util.LinkedList;
 
 public class Graph extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
-    private enum Actions {
-        ADD_NODE, REMOVE_NODE, ADD_CONNECTION, REMOVE_CONNECTION
-    }
-
-    private class Action {
-        Actions action;
-        Object[] params;
-
-        Action(Actions action, Object[] params) {
-            this.action = action;
-            this.params = params;
-        }
-    }
-
     private static final int mouseSize = 4;
     private Color textColor;
     private Color nodeColor;
@@ -34,9 +20,9 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     private boolean showingPath;
     private boolean zooming;
     private boolean moving;
+    private double zoom = 1;
     private int mouseX;
     private int mouseY;
-    private double zoom = 1;
     private Node draggedNode;
 
     public Graph(Color nodeColor, Color connectionColor, Color textColor) {
@@ -115,25 +101,25 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         removeNodeFromConnections(nodeToRemove);
     }
 
-    public Node getSelectedNode() throws NullPointerException{
-        for(Node node : nodes.values())
-            if(node.isSelected())
+    public Node getSelectedNode() throws NullPointerException {
+        for (Node node : nodes.values())
+            if (node.isSelected())
                 return node;
         throw new NullPointerException();
     }
 
-    public Connection getSelectedConnection() throws NullPointerException{
-        for(Node node : nodes.values()){
-            for(Object c : node.connections.values()){
-                if(((Connection)c).isSelected())
-                    return (Connection)c;
+    public Connection getSelectedConnection() throws NullPointerException {
+        for (Node node : nodes.values()) {
+            for (Object c : node.connections.values()) {
+                if (((Connection) c).isSelected())
+                    return (Connection) c;
             }
         }
         throw new NullPointerException();
     }
 
-    public void removeSelectedConnection(){
-        for(Node node : nodes.values()){
+    public void removeSelectedConnection() {
+        for (Node node : nodes.values()) {
             Iterator<HashMap.Entry<String, Connection>> entryIterator = node.connections.entrySet().iterator();
             HashMap.Entry<String, Connection> entry;
             while (entryIterator.hasNext()) {
@@ -167,12 +153,6 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (zooming) {
-            AffineTransform at = new AffineTransform();
-            at.scale(zoom, zoom);
-            ((Graphics2D)g).transform(at);
-            zooming = false;
-        }
         drawGraph((Graphics2D) g);
     }
 
@@ -183,20 +163,51 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         }
         for (Node node : nodes.values())
             node.drawNode(g);
-        if(showingPath) {
-            if (path!=null)
+        if (showingPath) {
+            if (path != null)
                 for (int i = 0; i < path.size(); i++) {
                     path.get(i).setShowingPath(true);
                     path.get(i).drawNode(g);
                     if (i + 1 < path.size()) {
-                       Connection.drawConnection(g, new Connection("",path.get(i),path.get(i + 1)), true);
+                        Connection.drawConnection(g, new Connection("", path.get(i), path.get(i + 1)), true);
                     }
                 }
         }
     }
 
+    public void expandGraph(boolean expand){
+        for(Node node : nodes.values()){
+            if(expand){
+                node.setX(getWidth()/2-(getWidth()/2-node.getX())*1.1);
+                node.setY(getHeight()/2 - (getHeight()/2-node.getY())*1.1);
+                node.setDiameter(node.getDiameter()*1.1);
+            }
+            else{
+                node.setX(getWidth()/2-(getWidth()/2-node.getX())/1.1);
+                node.setY(getHeight()/2 - (getHeight()/2-node.getY())/1.1);
+                node.setDiameter(node.getDiameter()/1.1);
+            }
+        }
+    }
 
-
+    public void zoomGraph(boolean zoomIn){
+        for(Node node : nodes.values()){
+            double mX = MouseInfo.getPointerInfo().getLocation().x;
+            double mY = MouseInfo.getPointerInfo().getLocation().y;
+            if(zoomIn){
+                node.setX(mX-(mX-node.getX())*1.1);
+                node.setY(mY - (mY-node.getY())*1.1);
+                node.setDiameter(node.getDiameter()*1.1);
+                zoom*=1.1;
+            }
+            else{
+                node.setX(mX-(mX-node.getX())/1.1);
+                node.setY(mY - (mY-node.getY())/1.1);
+                node.setDiameter(node.getDiameter()/1.1);
+                zoom/=1.1;
+            }
+        }
+    }
 
     public void removeAllNodes() {
         nodes.clear();
@@ -204,12 +215,18 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(!moving) {
+        for(Node node : nodes.values()){
+                node.setX(node.getX()/zoom);
+                node.setY(node.getY()/zoom);
+                node.setDiameter(node.getDiameter()/zoom);
+                zoom = 1;
+        }
+        zoom=1;
+        if (!moving) {
             boolean selected = selectNode(e);
             selectConnection(e, selected);
             repaint();
-        }
-        else{
+        } else {
             mouseX = e.getX();
             mouseY = e.getY();
         }
@@ -230,8 +247,8 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             }
         } else
             mouseX = e.getX();
-            mouseY = e.getY();
-            dragging = true;
+        mouseY = e.getY();
+        dragging = true;
         repaint();
 
     }
@@ -246,17 +263,16 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     @Override
     public void mouseDragged(MouseEvent e) {
         if (dragging) {
-            if(!moving) {
-                if(draggedNode!=null) {
+            if (!moving) {
+                if (draggedNode != null) {
                     draggedNode.setX(e.getX());
                     draggedNode.setY(e.getY());
                     repaint();
                 }
-            }
-            else{
-                for(Node node : nodes.values()){
-                    node.setX(node.getX()+(-mouseX+e.getX())/100);
-                    node.setY(node.getY()+(-mouseY+e.getY())/100);
+            } else {
+                for (Node node : nodes.values()) {
+                    node.setX(node.getX() + (-mouseX + e.getX()) / 100);
+                    node.setY(node.getY() + (-mouseY + e.getY()) / 100);
                 }
                 repaint();
             }
@@ -268,12 +284,12 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         zooming = true;
         //Zoom in
         if (e.getWheelRotation() < 0) {
-            zoom *= 1.1;
+            zoomGraph(true);
             repaint();
         }
         //Zoom out
         if (e.getWheelRotation() > 0) {
-            zoom /= 1.1;
+            zoomGraph(false);
             repaint();
         }
     }
@@ -309,7 +325,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         this.moving = moving;
     }
 
-    public void selectConnection(MouseEvent e, boolean selected){
+    public void selectConnection(MouseEvent e, boolean selected) {
         for (Node node : nodes.values()) {
             for (Object connection : node.connections.values()) {
                 if (((Connection) connection).getLine().intersects(e.getX(), e.getY(), mouseSize, mouseSize) && !selected) {
@@ -321,7 +337,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         }
     }
 
-    public boolean selectNode(MouseEvent e){
+    public boolean selectNode(MouseEvent e) {
         boolean selected = false;
         for (Node node : nodes.values()) {
             if (node.getCircle().contains(e.getPoint()) && !selected) {
@@ -331,6 +347,20 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
                 node.setSelected(false);
         }
         return selected;
+    }
+
+    private enum Actions {
+        ADD_NODE, REMOVE_NODE, ADD_CONNECTION, REMOVE_CONNECTION
+    }
+
+    private class Action {
+        Actions action;
+        Object[] params;
+
+        Action(Actions action, Object[] params) {
+            this.action = action;
+            this.params = params;
+        }
     }
 
 }

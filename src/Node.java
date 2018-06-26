@@ -10,10 +10,10 @@ public class Node<T> {
     protected String id;
     protected T data;
     protected int numOfConnections = 0;
-    private double size = 5;
-    private int x;
-    private int y;
-    private int diameter;
+    private double size = 10;
+    private double x;
+    private double y;
+    private double diameter;
     private Ellipse2D.Double circle;
     private Color nodeColor;
     private Color textColor;
@@ -30,7 +30,7 @@ public class Node<T> {
         connections = new HashMap<>();
         x = (int) (Math.random()*1300);
         y = (int) (Math.random()*700);
-        diameter = (int) (size*5);
+        diameter = size*5;
         circle = new Ellipse2D.Double(x+diameter/2, y+diameter/2, diameter, diameter);
     }
 
@@ -86,7 +86,7 @@ public class Node<T> {
         g.fill(circle);
         g.setColor(textColor);
         g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        g.drawString(label, x-diameter/2-label.length(), y-diameter/2+30/2);
+        g.drawString(label, (int)(x-diameter/2-label.length()), (int)(y-diameter/2+30/2));
     }
 
     public void drawConnections(Graphics2D g){
@@ -111,27 +111,27 @@ public class Node<T> {
         this.selected = selected;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public int getDiameter() {
+    public double getDiameter() {
         return diameter;
     }
 
-    public void setDiameter(int diameter) {
+    public void setDiameter(double diameter) {
         this.diameter = diameter;
     }
 

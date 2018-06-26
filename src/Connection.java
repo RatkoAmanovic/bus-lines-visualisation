@@ -36,10 +36,10 @@ public class Connection {
 
     public static void drawConnection(Graphics2D g, Connection c, boolean showingPath){
         Color drawColor = c.color;
-        int sX = c.sourceNode.getX();
-        int sY = c.sourceNode.getY();
-        int tX = c.targetNode.getX();
-        int tY = c.targetNode.getY();
+        double sX = c.sourceNode.getX();
+        double sY = c.sourceNode.getY();
+        double tX = c.targetNode.getX();
+        double tY = c.targetNode.getY();
         if(c.selected)
             drawColor = Color.red;
         if(showingPath)
@@ -53,7 +53,7 @@ public class Connection {
         g.draw(c.line);
         g.setColor(c.textColor);
         g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        g.drawString(c.getLabel(), (sX>tX)?(sX+(sX+tX)/2)/2+arc/2:(sX+(sX+tX)/2)/2-arc/2, (sY>tY)?(sY+(sY+tY)/2)/2+arc/2:(sY+(sY+tY)/2)/2-arc/2);
+        g.drawString(c.getLabel(), (int)((sX>tX)?(sX+(sX+tX)/2)/2+arc/2:(sX+(sX+tX)/2)/2-arc/2), (int)((sY>tY)?(sY+(sY+tY)/2)/2+arc/2:(sY+(sY+tY)/2)/2-arc/2));
     }
 
     public int getWidth() {

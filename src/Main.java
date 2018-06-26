@@ -53,10 +53,22 @@ public class Main extends JFrame {
         menuBar.add(menuGraph);
 
         addShowPathMenuItem(frame, menuGraph);
-        addChangeMovability(menuGraph);
+        addChangeMovabilityMenuItem(menuGraph);
+        addExpansionMenuItem(menuGraph, true, KeyEvent.VK_W);
+        addExpansionMenuItem(menuGraph, false, KeyEvent.VK_Q);
     }
 
-    public void addChangeMovability(JMenu menu) {
+    public void addExpansionMenuItem(JMenu menu, boolean expand, int keyEvent){
+        JMenuItem addExpansion = new JMenuItem((expand?"Expand":"Contract")+" Graph");
+        addExpansion.addActionListener(e -> {
+            graph.expandGraph(expand);
+            repaint();
+        });
+        addExpansion.setAccelerator(KeyStroke.getKeyStroke(keyEvent, InputEvent.CTRL_MASK));
+        menu.add(addExpansion);
+    }
+
+    public void addChangeMovabilityMenuItem(JMenu menu) {
         JMenuItem changeMovability = new JMenuItem("Set/Reset Moving");
         changeMovability.addActionListener(e -> {
             graph.setMoving(!graph.isMoving());
