@@ -38,7 +38,7 @@ public class CSVFileReader implements IGraphFileReader {
                 targetNode = new Node(label, row[i]);
                 graph.addNode(targetNode);
             }
-            graph.addConnection(sourceNode, targetNode, label);
+            graph.addConnection(new Connection(label, sourceNode, targetNode));
         }
     }
 
@@ -54,7 +54,7 @@ public class CSVFileReader implements IGraphFileReader {
         for(int i = 1; i<row.length; i++){
             if(row[i].equals("1")){
                 Node targetNode = graph.getNodeById(nodeIds[i-1]);
-                graph.addConnection(sourceNode, targetNode, label);
+                graph.addConnection(new Connection(label, sourceNode, targetNode));
 
             }
         }

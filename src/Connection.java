@@ -34,7 +34,7 @@ public class Connection {
         this.textColor = textColor;
     }
 
-    public static void drawConnection(Graphics2D g, Connection c, boolean showingPath){
+    public static void drawConnection(Graphics2D g, Connection c, boolean showingPath, boolean showingLabel){
         Color drawColor = c.color;
         double sX = c.sourceNode.getX();
         double sY = c.sourceNode.getY();
@@ -51,9 +51,15 @@ public class Connection {
         c.line = new QuadCurve2D.Double();
         c.line.setCurve(sX, sY,(sX>tX)?(sX+tX)/2+arc:(sX+tX)/2-arc, (sX>tX)?(sY+tY)/2+arc:(sY+tY)/2-arc, tX, tY);
         g.draw(c.line);
-        g.setColor(c.textColor);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        g.drawString(c.getLabel(), (int)((sX>tX)?(sX+(sX+tX)/2)/2+arc/2:(sX+(sX+tX)/2)/2-arc/2), (int)((sY>tY)?(sY+(sY+tY)/2)/2+arc/2:(sY+(sY+tY)/2)/2-arc/2));
+        if(showingLabel) {
+            g.setColor(c.textColor);
+            g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+            g.drawString(c.getLabel(), (int) ((sX > tX) ? (sX + (sX + tX) / 2) / 2 + arc / 2 : (sX + (sX + tX) / 2) / 2 - arc / 2), (int) ((sY > tY) ? (sY + (sY + tY) / 2) / 2 + arc / 2 : (sY + (sY + tY) / 2) / 2 - arc / 2));
+        }
+    }
+
+    public void setWidth(int width){
+        this.width = width;
     }
 
     public int getWidth() {

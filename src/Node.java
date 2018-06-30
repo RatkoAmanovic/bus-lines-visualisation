@@ -10,6 +10,7 @@ public class Node<T> {
     protected String id;
     protected T data;
     protected int numOfConnections = 0;
+    private int degree = 0;
     private double size = 10;
     private double x;
     private double y;
@@ -19,7 +20,9 @@ public class Node<T> {
     private Color textColor;
     private Color connectionColor;
     private boolean showingPath;
+    private boolean showingLabel = true;
     private boolean selected = false;
+    private boolean formattingByDegree = false;
 
     public Node(String label, String id) {
         this.label = label;
@@ -32,6 +35,19 @@ public class Node<T> {
         y = (int) (Math.random()*700);
         diameter = size*5;
         circle = new Ellipse2D.Double(x+diameter/2, y+diameter/2, diameter, diameter);
+    }
+
+    public Node(String label, String id, double x, double y, double diameter, Color nodeColor) {
+        this.label = label;
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.diameter = diameter;
+        this.nodeColor = nodeColor;
+
+        data = null;
+        circle = new Ellipse2D.Double(x+diameter/2, y+diameter/2, diameter, diameter);
+        connections = new HashMap<>();
     }
 
     public static LinkedList<Node> shortestPathBetweenNodes(Node sourceNode, Node targetNode){
@@ -80,18 +96,25 @@ public class Node<T> {
             drawColor = Color.red;
         if(showingPath)
             drawColor = Color.blue;
-        int d = (int) (diameter+numOfConnections*size);
+        double d = diameter;
+        String l = label;
+        if(formattingByDegree){
+            d = diameter+degree*size;
+            l = label + " : " + degree;
+        }
         circle = new Ellipse2D.Double(x - d/2, y - d/2, d, d);
         g.setColor(drawColor);
         g.fill(circle);
-        g.setColor(textColor);
-        g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        g.drawString(label, (int)(x-diameter/2-label.length()), (int)(y-diameter/2+30/2));
+        if(showingLabel) {
+            g.setColor(textColor);
+            g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+            g.drawString(l, (int) (x - diameter / 2 - l.length()), (int) (y - diameter / 2 + 30 / 2));
+        }
     }
 
     public void drawConnections(Graphics2D g){
         for(Object connection: connections.values()){
-            Connection.drawConnection(g, (Connection) connection, showingPath);
+            Connection.drawConnection(g, (Connection) connection, showingPath, showingLabel);
         }
     }
 
@@ -197,21 +220,26 @@ public class Node<T> {
         return false;
     }
 
-    public void addConnection(Node sourceNode, Node targetNode, String la){
-        if(la.equals(""))
-            la = "Ratko";
-        connections.put(targetNode.id, new Connection(la, sourceNode,  targetNode));
-        connections.get(targetNode.id).setColor(connectionColor);
+    public void addConnection(Connection c){
+        connections.put(c.getTargetNode().id, c);
+        if(connections.get(c.getTargetNode().id).getColor()==null)
+            connections.get(c.getTargetNode().id).setColor(connectionColor);
+        c.getTargetNode().degree++;
+        degree++;
         numOfConnections++;
     }
 
     public void removeConnection(Node node){
-        if(node.isConnected(this)){
-            node.connections.remove(this.id);
-            node.connections.put(this.id, new Connection("",node, this));
-        }
+        degree--;
+        node.degree--;
         connections.remove(node.id);
         numOfConnections--;
+    }
+
+    public void removeAllConnections(){
+        for(Connection c : connections.values()){
+            c.getTargetNode().decDegree();
+        }
     }
 
     public int getNumOfConnections() {
@@ -224,6 +252,36 @@ public class Node<T> {
 
     public void setConnectionLabel(Node node,String label){
         connections.get(node.id).setLabel(label);
+    }
+
+    public void incDegree() {
+        degree++;
+    }
+
+    public void decDegree() {
+        degree--;
+        if(degree<1)
+            degree = 1;
+    }
+
+    public int getDegree(){
+        return degree;
+    }
+
+    public boolean isShowingLabel() {
+        return showingLabel;
+    }
+
+    public void setShowingLabel(boolean showingLabel) {
+        this.showingLabel = showingLabel;
+    }
+
+    public boolean isFormattingByDegree() {
+        return formattingByDegree;
+    }
+
+    public void setFormattingByDegree(boolean formattingByDegree) {
+        this.formattingByDegree = formattingByDegree;
     }
 }
 
