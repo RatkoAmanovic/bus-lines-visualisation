@@ -45,6 +45,25 @@ public class Node {
         connections = new HashMap<>();
     }
 
+    Node(Node node){
+        id = node.id;
+        degree = node.degree;
+        label = node.label;
+        size = node.size;
+        x = node.x;
+        y = node.y;
+        diameter = node.diameter;
+        circle = node.circle;
+        nodeColor = node.nodeColor;
+        textColor = node.textColor;
+        connectionColor = node.connectionColor;
+        showingPath = node.showingPath;
+        showingLabel = node.showingLabel;
+        selected = node.selected;
+        formattingByDegree = node.formattingByDegree;
+        connections = node.connections;
+    }
+
     static LinkedList<Node> shortestPathBetweenNodes(Node sourceNode, Node targetNode) {
         if (sourceNode == targetNode) return null;
         HashMap<Node, Node> allPaths = new HashMap<>();

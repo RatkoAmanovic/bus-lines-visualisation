@@ -55,8 +55,8 @@ public class Main extends JFrame {
     private void addFileMenu(JMenuBar menuBar, JFrame frame) {
         JMenu menuFile = new JMenu("File");
         menuBar.add(menuFile);
-//        addUndo(menuFile);
-//        addRedo(menuFile);
+        addUndo(menuFile);
+        addRedo(menuFile);
         final RAFileReader raFileReader = new RAFileReader();
         addMenuItemFileOpener(raFileReader, frame, menuFile, "RA", KeyEvent.VK_R);
         final GMLFileReader gmlFileReader = new GMLFileReader();
@@ -90,7 +90,7 @@ public class Main extends JFrame {
 
         JMenuItem removeNode = new JMenuItem("Delete Node");
         removeNode.addActionListener(e -> {
-            if (graph.getSelectedNode() != null)
+            if (graph.getSelectedNode(false) != null)
                 graph.removeSelectedNode();
         });
         removeNode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
@@ -111,7 +111,7 @@ public class Main extends JFrame {
         JMenuItem deleteConnection;
         deleteConnection = new JMenuItem("Delete Connection");
         deleteConnection.addActionListener(e -> {
-            if (graph.getSelectedConnection() != null) {
+            if (graph.getSelectedConnection(false) != null) {
                 graph.removeSelectedConnection();
                 repaint();
             }
@@ -139,25 +139,25 @@ public class Main extends JFrame {
 
     //MenuItems Inits
 
-//    public void addUndo(JMenu menu) {
-//        JMenuItem undo = new JMenuItem("Undo");
-//        undo.addActionListener(e -> {
-//            graph.undo();
-//            repaint();
-//        });
-//        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
-//        menu.add(undo);
-//    }
-//
-//    public void addRedo(JMenu menu) {
-//        JMenuItem redo = new JMenuItem("Redo");
-//        redo.addActionListener(e -> {
-//            graph.redo();
-//            repaint();
-//        });
-//        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK + InputEvent.SHIFT_MASK));
-//        menu.add(redo);
-//    }
+    public void addUndo(JMenu menu) {
+        JMenuItem undo = new JMenuItem("Undo");
+        undo.addActionListener(e -> {
+            graph.undo();
+            repaint();
+        });
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
+        menu.add(undo);
+    }
+
+    public void addRedo(JMenu menu) {
+        JMenuItem redo = new JMenuItem("Redo");
+        redo.addActionListener(e -> {
+            graph.redo();
+            repaint();
+        });
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK + InputEvent.SHIFT_MASK));
+        menu.add(redo);
+    }
 
     private void addExportRAFile(JFrame frame, JMenu menu) {
         JMenuItem exportGraph = new JMenuItem("Export RA File");
@@ -259,9 +259,9 @@ public class Main extends JFrame {
     private void addChangeConnectionColor(JFrame frame, JMenu menu) {
         JMenuItem changeNodeSize = new JMenuItem("Set Connection Color");
         changeNodeSize.addActionListener(e -> {
-            if (graph.getSelectedConnection() != null) {
-                Color newColor = JColorChooser.showDialog(frame, "Choose Connection Color", graph.getSelectedConnection().getColor());
-                graph.getSelectedConnection().setColor(newColor);
+            if (graph.getSelectedConnection(false) != null) {
+                Color newColor = JColorChooser.showDialog(frame, "Choose Connection Color", graph.getSelectedConnection(false).getColor());
+                graph.getSelectedConnection(true).setColor(newColor);
                 repaint();
             }
         });
@@ -271,9 +271,9 @@ public class Main extends JFrame {
     private void addSetConnectionLabel(JFrame frame, JMenu menu) {
         JMenuItem changeConnectionLabel = new JMenuItem("Set Connection Label");
         changeConnectionLabel.addActionListener(e -> {
-            if (graph.getSelectedConnection() != null) {
-                String newLabel = JOptionPane.showInputDialog(frame, "Unesite novu labelu veze", graph.getSelectedConnection().getLabel());
-                graph.getSelectedConnection().setLabel(newLabel);
+            if (graph.getSelectedConnection(false) != null) {
+                String newLabel = JOptionPane.showInputDialog(frame, "Unesite novu labelu veze", graph.getSelectedConnection(false).getLabel());
+                graph.getSelectedConnection(true).setLabel(newLabel);
                 repaint();
             }
         });
@@ -283,9 +283,9 @@ public class Main extends JFrame {
     private void addSetNodeLabel(JFrame frame, JMenu menu) {
         JMenuItem changeNodeLabel = new JMenuItem("Set Node Label");
         changeNodeLabel.addActionListener(e -> {
-            if (graph.getSelectedNode() != null) {
-                String newLabel = JOptionPane.showInputDialog(frame, "Unesite novu labelu cvora", graph.getSelectedNode().getLabel());
-                graph.getSelectedNode().setLabel(newLabel);
+            if (graph.getSelectedNode(false) != null) {
+                String newLabel = JOptionPane.showInputDialog(frame, "Unesite novu labelu cvora", graph.getSelectedNode(false).getLabel());
+                graph.getSelectedNode(true).setLabel(newLabel);
                 repaint();
             }
         });
@@ -295,8 +295,8 @@ public class Main extends JFrame {
     private void addChangeConnectionSize(JMenu menu, boolean inc) {
         JMenuItem changeConnectionSize = new JMenuItem((inc ? "Inc" : "Dec") + " Connection Size");
         changeConnectionSize.addActionListener(e -> {
-            if (graph.getSelectedConnection() != null) {
-                graph.getSelectedConnection().changeWidth(inc);
+            if (graph.getSelectedConnection(false) != null) {
+                graph.getSelectedConnection(true).changeWidth(inc);
                 repaint();
             }
         });
@@ -306,8 +306,8 @@ public class Main extends JFrame {
     private void addChangeNodeSize(JMenu menu, int keyEvent, boolean inc) {
         JMenuItem changeNodeSize = new JMenuItem((inc ? "Inc" : "Dec") + " Node Size");
         changeNodeSize.addActionListener(e -> {
-            if (graph.getSelectedNode() != null) {
-                graph.getSelectedNode().changeDiameter(inc);
+            if (graph.getSelectedNode(false) != null) {
+                graph.getSelectedNode(true).changeDiameter(inc);
                 repaint();
             }
         });
@@ -318,9 +318,9 @@ public class Main extends JFrame {
     private void addChangeNodeColor(JFrame frame, JMenu menu) {
         JMenuItem changeNodeSize = new JMenuItem("Set Node Color");
         changeNodeSize.addActionListener(e -> {
-            if (graph.getSelectedNode() != null) {
-                Color newColor = JColorChooser.showDialog(frame, "Choose Node Color", graph.getSelectedNode().getNodeColor());
-                graph.getSelectedNode().setNodeColor(newColor);
+            if (graph.getSelectedNode(false) != null) {
+                Color newColor = JColorChooser.showDialog(frame, "Choose Node Color", graph.getSelectedNode(false).getNodeColor());
+                graph.getSelectedNode(true).setNodeColor(newColor);
                 repaint();
             }
         });
