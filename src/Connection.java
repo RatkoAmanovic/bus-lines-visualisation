@@ -12,17 +12,41 @@ public class Connection {
     private Color color;
     private Color textColor = Color.black;
 
-    public Connection(String label, Node sourceNode, Node targetNode) {
+    Connection(String label, Node sourceNode, Node targetNode) {
         this.label = label;
         this.sourceNode = sourceNode;
         this.targetNode = targetNode;
     }
 
-    public Color getColor() {
+    static void drawConnection(Graphics2D g, Connection c, boolean showingPath, boolean showingLabel) {
+        Color drawColor = c.color;
+        double sX = c.sourceNode.getX();
+        double sY = c.sourceNode.getY();
+        double tX = c.targetNode.getX();
+        double tY = c.targetNode.getY();
+        if (c.selected)
+            drawColor = Color.red;
+        if (showingPath)
+            drawColor = Color.blue;
+        g.setColor(drawColor);
+
+        BasicStroke stroke = new BasicStroke(c.width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
+        g.setStroke(stroke);
+        c.line = new QuadCurve2D.Double();
+        c.line.setCurve(sX, sY, (sX > tX) ? (sX + tX) / 2 + arc : (sX + tX) / 2 - arc, (sX > tX) ? (sY + tY) / 2 + arc : (sY + tY) / 2 - arc, tX, tY);
+        g.draw(c.line);
+        if (showingLabel) {
+            g.setColor(c.textColor);
+            g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+            g.drawString(c.getLabel(), (int) ((sX > tX) ? (sX + (sX + tX) / 2) / 2 + arc / 2 : (sX + (sX + tX) / 2) / 2 - arc / 2), (int) ((sY > tY) ? (sY + (sY + tY) / 2) / 2 + arc / 2 : (sY + (sY + tY) / 2) / 2 - arc / 2));
+        }
+    }
+
+    Color getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    void setColor(Color color) {
         this.color = color;
     }
 
@@ -34,85 +58,61 @@ public class Connection {
         this.textColor = textColor;
     }
 
-    public static void drawConnection(Graphics2D g, Connection c, boolean showingPath, boolean showingLabel){
-        Color drawColor = c.color;
-        double sX = c.sourceNode.getX();
-        double sY = c.sourceNode.getY();
-        double tX = c.targetNode.getX();
-        double tY = c.targetNode.getY();
-        if(c.selected)
-            drawColor = Color.red;
-        if(showingPath)
-            drawColor = Color.blue;
-        g.setColor(drawColor);
-
-        BasicStroke stroke = new BasicStroke(c.width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
-        g.setStroke(stroke);
-        c.line = new QuadCurve2D.Double();
-        c.line.setCurve(sX, sY,(sX>tX)?(sX+tX)/2+arc:(sX+tX)/2-arc, (sX>tX)?(sY+tY)/2+arc:(sY+tY)/2-arc, tX, tY);
-        g.draw(c.line);
-        if(showingLabel) {
-            g.setColor(c.textColor);
-            g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-            g.drawString(c.getLabel(), (int) ((sX > tX) ? (sX + (sX + tX) / 2) / 2 + arc / 2 : (sX + (sX + tX) / 2) / 2 - arc / 2), (int) ((sY > tY) ? (sY + (sY + tY) / 2) / 2 + arc / 2 : (sY + (sY + tY) / 2) / 2 - arc / 2));
-        }
-    }
-
-    public void setWidth(int width){
-        this.width = width;
-    }
-
-    public int getWidth() {
+    int getWidth() {
         return width;
     }
 
-    public void changeWidth(boolean inc){
-        if(inc)
+    void setWidth(int width) {
+        this.width = width;
+    }
+
+    void changeWidth(boolean inc) {
+        if (inc)
             width++;
-        else{
+        else {
             width--;
-            if(width<1)
+            if (width < 1)
                 width = 1;
         }
     }
 
-    public boolean isSelected() {
+    boolean isSelected() {
         return selected;
     }
 
-    public void setSelected(boolean selected) {
+    void setSelected(boolean selected) {
         this.selected = selected;
     }
 
-    public String getLabel() {
+    String getLabel() {
         return label;
     }
 
-    public void setLabel(String label) {
+    void setLabel(String label) {
         this.label = label;
     }
 
-    public QuadCurve2D.Double getLine() {
+    QuadCurve2D.Double getLine() {
         return line;
     }
 
-    public void setLine(QuadCurve2D.Double line) {
+    void setLine(QuadCurve2D.Double line) {
         this.line = line;
     }
 
-    public Node getSourceNode() {
+    Node getSourceNode() {
         return sourceNode;
     }
 
-    public void setSourceNode(Node sourceNode) {
+    void setSourceNode(Node sourceNode) {
         this.sourceNode = sourceNode;
     }
 
-    public Node getTargetNode() {
+    Node getTargetNode() {
         return targetNode;
     }
 
-    public void setTargetNode(Node targetNode) {
+    void setTargetNode(Node targetNode) {
         this.targetNode = targetNode;
     }
 }
