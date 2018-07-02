@@ -18,9 +18,9 @@ public class Node {
     private Color textColor;
     private Color connectionColor;
     private boolean showingPath;
-    private boolean showingLabel = true;
+    private boolean showingLabel = false;
     private boolean selected = false;
-    private boolean formattingByDegree = false;
+    private boolean formattingByDegree = true;
 
     Node(String label, String id) {
         this.label = label;
@@ -30,7 +30,7 @@ public class Node {
         connections = new HashMap<>();
         x = (int) (Math.random() * 1300);
         y = (int) (Math.random() * 700);
-        diameter = size * 5;
+        diameter = 10;
         circle = new Ellipse2D.Double(x + diameter / 2, y + diameter / 2, diameter, diameter);
     }
 
@@ -43,25 +43,6 @@ public class Node {
         this.nodeColor = nodeColor;
         circle = new Ellipse2D.Double(x + diameter / 2, y + diameter / 2, diameter, diameter);
         connections = new HashMap<>();
-    }
-
-    Node(Node node){
-        id = node.id;
-        degree = node.degree;
-        label = node.label;
-        size = node.size;
-        x = node.x;
-        y = node.y;
-        diameter = node.diameter;
-        circle = node.circle;
-        nodeColor = node.nodeColor;
-        textColor = node.textColor;
-        connectionColor = node.connectionColor;
-        showingPath = node.showingPath;
-        showingLabel = node.showingLabel;
-        selected = node.selected;
-        formattingByDegree = node.formattingByDegree;
-        connections = node.connections;
     }
 
     static LinkedList<Node> shortestPathBetweenNodes(Node sourceNode, Node targetNode) {
@@ -111,7 +92,7 @@ public class Node {
         double d = diameter;
         String l = label;
         if (formattingByDegree) {
-            d = diameter + degree * size;
+            d = diameter + degree/2;
             l = label + " : " + id + " : " + degree;
         }
         circle = new Ellipse2D.Double(x - d / 2, y - d / 2, d, d);
@@ -246,6 +227,10 @@ public class Node {
 
     void setFormattingByDegree(boolean formattingByDegree) {
         this.formattingByDegree = formattingByDegree;
+    }
+
+    public int getDegree() {
+        return degree;
     }
 }
 

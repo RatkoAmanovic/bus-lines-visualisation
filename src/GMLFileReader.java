@@ -37,8 +37,6 @@ public class GMLFileReader implements IGraphFileReader {
                 target = readByPattern(bufferedReader, lastWordPattern);
                 label = readByPattern(bufferedReader, labelPattern);
 
-                System.out.println(source + " " + target + " " + label);
-
                 Node sourceNode = graph.getNodeById(source);
                 Node targetNode = graph.getNodeById(target);
 

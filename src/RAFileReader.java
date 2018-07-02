@@ -23,7 +23,7 @@ public class RAFileReader implements IGraphFileReader {
         double y;
         double diameter;
         String[] connectionColor;
-        int width;
+        double width;
         graph.removeAllNodes();
         File file = new File(fileName);
         FileReader fileReader = new FileReader(file);
@@ -49,7 +49,7 @@ public class RAFileReader implements IGraphFileReader {
                 target = readByPattern(bufferedReader, lastWordPattern);
                 label = readByPattern(bufferedReader, labelPattern);
                 connectionColor = (readByPattern(bufferedReader, lastWordPattern)).split(",");
-                width = Integer.parseInt(readByPattern(bufferedReader, lastWordPattern));
+                width = Double.parseDouble(readByPattern(bufferedReader, lastWordPattern));
 
                 Node sourceNode = graph.getNodeById(source);
                 Node targetNode = graph.getNodeById(target);

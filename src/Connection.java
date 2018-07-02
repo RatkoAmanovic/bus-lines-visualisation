@@ -5,7 +5,7 @@ public class Connection {
     private static final int arc = 20;
     private String label;
     private QuadCurve2D.Double line;
-    private int width = 2;
+    private double width = 0.5;
     private Node sourceNode;
     private Node targetNode;
     private boolean selected;
@@ -30,7 +30,7 @@ public class Connection {
             drawColor = Color.blue;
         g.setColor(drawColor);
 
-        BasicStroke stroke = new BasicStroke(c.width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
+        BasicStroke stroke = new BasicStroke((int)c.width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
         g.setStroke(stroke);
         c.line = new QuadCurve2D.Double();
         c.line.setCurve(sX, sY, (sX > tX) ? (sX + tX) / 2 + arc : (sX + tX) / 2 - arc, (sX > tX) ? (sY + tY) / 2 + arc : (sY + tY) / 2 - arc, tX, tY);
@@ -58,21 +58,21 @@ public class Connection {
         this.textColor = textColor;
     }
 
-    int getWidth() {
+    double getWidth() {
         return width;
     }
 
-    void setWidth(int width) {
+    void setWidth(double width) {
         this.width = width;
     }
 
     void changeWidth(boolean inc) {
         if (inc)
-            width++;
+            width+=0.5;
         else {
-            width--;
-            if (width < 1)
-                width = 1;
+            width-=0.5;
+            if (width < 0.5)
+                width = 0.5;
         }
     }
 

@@ -21,8 +21,10 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     private LinkedList<Node> path;
     private boolean dragging;
     private boolean showingPath;
-    private boolean showingLabel = true;
+    private boolean showingLabel = false;
     private boolean moving;
+    private boolean saved = false;
+    private boolean formatingByDegree = true;
     private int mouseX;
     private int mouseY;
     private Node draggedNode;
@@ -64,9 +66,10 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         }
 
         raFile.close();
+        saved = true;
     }
 
-    class NodeAction extends Action{
+    class NodeAction extends Action {
         Node node;
         Color color, oldColor;
         String label, oldLabel;
@@ -106,10 +109,11 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             undoStack.push(this);
         }
     }
+
     Node getSelectedNode(boolean undoable) {
         for (Node node : nodes.values())
             if (node.isSelected()) {
-                if(undoable){
+                if (undoable) {
                     redoStack.clear();
                     NodeAction nodeAction = new NodeAction(node);
                     nodeAction.doo();
@@ -119,11 +123,30 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         return null;
     }
 
-    class ConnectionAction extends Action{
+    void incAllNodesSize() {
+        for (Node node : nodes.values()) {
+            redoStack.clear();
+            node.setDiameter(node.getDiameter() + 1);
+        }
+        saved = false;
+    }
+
+    void decAllNodesSize() {
+        for (Node node : nodes.values()) {
+            {
+                redoStack.clear();
+                node.setDiameter(node.getDiameter() - 1);
+                if (node.getDiameter() <= 0) node.setDiameter(1);
+            }
+        }
+        saved = false;
+    }
+
+    class ConnectionAction extends Action {
         Connection connection;
         Color color, oldColor;
         String label, oldLabel;
-        int width, oldWidth;
+        double width, oldWidth;
 
         ConnectionAction(Connection connection) {
             this.connection = connection;
@@ -159,13 +182,14 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             undoStack.push(this);
         }
     }
+
     Connection getSelectedConnection(boolean undoable) {
         for (Node node : nodes.values()) {
             for (Object c : node.connections.values()) {
                 if (((Connection) c).isSelected()) {
-                    if(undoable){
+                    if (undoable) {
                         redoStack.clear();
-                        ConnectionAction connectionAction = new ConnectionAction((Connection)c);
+                        ConnectionAction connectionAction = new ConnectionAction((Connection) c);
                         connectionAction.doo();
                     }
                     return (Connection) c;
@@ -175,14 +199,20 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         return null;
     }
 
-    void undo(){
-        if(!undoStack.isEmpty())
+    void undo() {
+        if (!undoStack.isEmpty())
             undoStack.pop().undo();
+        saved = false;
     }
 
-    void redo(){
-        if(!redoStack.isEmpty())
+    void redo() {
+        if (!redoStack.isEmpty())
             redoStack.pop().redo();
+        saved = false;
+    }
+
+    public boolean isSaved() {
+        return saved;
     }
 
     LinkedList<String> getNodeIds(Node node, boolean connected) {
@@ -205,7 +235,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         return labels;
     }
 
-    class AddNode extends Action{
+    class AddNode extends Action {
         Node node;
 
         AddNode(Node node) {
@@ -237,10 +267,12 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             undoStack.push(this);
         }
     }
+
     void addNode(Node node) {
         redoStack.clear();
         AddNode addNode = new AddNode(node);
         addNode.redo();
+        saved = false;
     }
 
     Node getNodeById(String id) {
@@ -266,15 +298,25 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         return cons;
     }
 
-    class RemoveSelectedNode extends Action{
+    class RemoveSelectedNode extends Action {
         Node node;
         LinkedList<Connection> connections;
+
+        @Override
+        protected void doo() {
+            connections = new LinkedList<>();
+            node = getSelectedNode(false);
+            nodes.remove(node.getId());
+            node.removeAllConnections();
+            connections = removeNodeFromConnections(node);
+            undoStack.push(this);
+        }
 
         @Override
         protected void undo() {
             AddNode addNode = new AddNode(node);
             addNode.doo();
-            for(Connection c : connections){
+            for (Connection c : connections) {
                 AddConnection addConnection = new AddConnection(c);
                 addConnection.doo();
             }
@@ -284,32 +326,34 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         @Override
         protected void redo() {
             connections = new LinkedList<>();
-            node = getSelectedNode(false);
             nodes.remove(node.getId());
             node.removeAllConnections();
             connections = removeNodeFromConnections(node);
             undoStack.push(this);
         }
     }
+
     void removeSelectedNode() {
         redoStack.clear();
         RemoveSelectedNode removeSelectedNode = new RemoveSelectedNode();
-        removeSelectedNode.redo();
+        removeSelectedNode.doo();
+        saved = false;
     }
 
     void setFormattingByDegree() {
-        for (Node node : nodes.values()) {
-            node.setFormattingByDegree(!node.isFormattingByDegree());
-        }
+        formatingByDegree = !formatingByDegree;
+        for (Node node : nodes.values())
+            node.setFormattingByDegree(formatingByDegree);
     }
 
-    class RemoveSelectedConnection extends Action{
+    class RemoveSelectedConnection extends Action {
         Connection connection;
+
         @Override
         protected void undo() {
-        AddConnection addConnection = new AddConnection(connection);
-        addConnection.doo();
-        redoStack.push(this);
+            AddConnection addConnection = new AddConnection(connection);
+            addConnection.doo();
+            redoStack.push(this);
         }
 
         @Override
@@ -328,10 +372,12 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             undoStack.push(this);
         }
     }
+
     void removeSelectedConnection() {
         redoStack.clear();
         RemoveSelectedConnection removeSelectedConnection = new RemoveSelectedConnection();
         removeSelectedConnection.redo();
+        saved = false;
     }
 
     void setShowingLabel() {
@@ -341,7 +387,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         }
     }
 
-    class AddConnection extends Action{
+    class AddConnection extends Action {
         Connection connection;
 
         public AddConnection(Connection connection) {
@@ -369,9 +415,12 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
             undoStack.push(this);
         }
     }
+
     void addConnection(Connection c) {
+        redoStack.clear();
         AddConnection addConnection = new AddConnection(c);
         addConnection.redo();
+        saved = false;
     }
 
     void shortestPathBetweenNodes(Node startNode, Node endNode) {
@@ -404,7 +453,6 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     }
 
     void expandGraph(boolean expand) {
-
         new Thread(() -> {
             for (Node node : nodes.values()) {
                 if (expand) {
@@ -418,7 +466,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
                 }
             }
         }).start();
-
+        saved = false;
     }
 
     private void zoomGraph(boolean zoomIn) {
@@ -440,6 +488,7 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
     void removeAllNodes() {
         nodes.clear();
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -489,12 +538,14 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
                     draggedNode.setX(e.getX());
                     draggedNode.setY(e.getY());
                     repaint();
+                    saved = false;
                 }
             } else {
                 for (Node node : nodes.values()) {
                     node.setX(node.getX() + (-mouseX + e.getX()) / 100);
                     node.setY(node.getY() + (-mouseY + e.getY()) / 100);
                 }
+                saved = false;
                 repaint();
             }
         }
@@ -565,4 +616,11 @@ public class Graph extends JPanel implements MouseListener, MouseMotionListener,
         return selected;
     }
 
+    public LinkedList<Node> getNodes() {
+        LinkedList<Node> nodesList = new LinkedList<>();
+        for (Node node : nodes.values()) {
+            nodesList.addFirst(node);
+        }
+        return nodesList;
+    }
 }

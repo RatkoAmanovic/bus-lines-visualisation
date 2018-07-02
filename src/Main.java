@@ -4,6 +4,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,8 @@ public class Main extends JFrame {
     private static final Color connectionColor = new Color(139, 195, 74);
     private static final Color textColor = new Color(0, 0, 0);
     private static final JFileChooser fileChooser = new JFileChooser();
+    private boolean forceAtlasTogle = false;
+    private ForceAtlas forceAtlas;
     private static Graph graph;
 
     private Main() {
@@ -28,7 +32,43 @@ public class Main extends JFrame {
 
     private void createWindow() {
         graph = new Graph(nodeColor, connectionColor, textColor);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm;
+                if (graph.isSaved()) {
+                    confirm = JOptionPane.showConfirmDialog(null,
+                            "Are you sure you want to exit the program?", "Exit Program",
+                            JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
+                } else {
+                    Object[] options = {"Yes", "No", "Save"};
+                    confirm = JOptionPane.showOptionDialog(
+                            null, "Are you sure you want to exit the program, you didn't save graph changes?",
+                            "Exit Program", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, options, null);
+                    if (confirm==0) {
+                        System.exit(0);
+                    }
+                    else if(confirm == 2){
+                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileFilter(null);
+                        fileChooser.setDialogTitle("Pick where to export");
+                        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                            try {
+                                graph.writeToRAFile(fileChooser.getSelectedFile().getAbsolutePath());
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        System.exit(0);
+                    }
+                }
+            }
+        });
         setBounds(0, 0, 800, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         addMenuBar(this);
@@ -97,8 +137,8 @@ public class Main extends JFrame {
 
         nodeMenu.add(addNode);
         nodeMenu.add(removeNode);
-        addChangeNodeSize(nodeMenu, KeyEvent.VK_9, true);
-        addChangeNodeSize(nodeMenu, KeyEvent.VK_MINUS, false);
+        addChangeNodeSize(nodeMenu, KeyEvent.VK_2, true);
+        addChangeNodeSize(nodeMenu, KeyEvent.VK_1, false);
         addChangeNodeColor(frame, nodeMenu);
         addSetNodeLabel(frame, nodeMenu);
     }
@@ -133,13 +173,29 @@ public class Main extends JFrame {
         addChangeMovabilityMenuItem(menuGraph);
         addExpansionMenuItem(menuGraph, true, KeyEvent.VK_W);
         addExpansionMenuItem(menuGraph, false, KeyEvent.VK_Q);
+        addForceAtlasMenuItem(menuGraph);
         addLabelShowingMenuItem(menuGraph);
         addSetFormattingByDegree(menuGraph);
     }
 
     //MenuItems Inits
 
-    public void addUndo(JMenu menu) {
+    private void addForceAtlasMenuItem(JMenu menu){
+        JMenuItem forceAtlasMenuItem = new JMenuItem("Togle Force Atlas");
+        forceAtlasMenuItem.addActionListener(e -> {
+            if(!forceAtlasTogle) {
+                forceAtlas = new ForceAtlas(graph);
+                forceAtlasTogle = !forceAtlasTogle;
+            }else {
+                forceAtlas.end();
+                forceAtlasTogle = !forceAtlasTogle;
+            }
+        });
+        forceAtlasMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK+InputEvent.SHIFT_MASK));
+        menu.add(forceAtlasMenuItem);
+    }
+
+    private void addUndo(JMenu menu) {
         JMenuItem undo = new JMenuItem("Undo");
         undo.addActionListener(e -> {
             graph.undo();
@@ -149,7 +205,7 @@ public class Main extends JFrame {
         menu.add(undo);
     }
 
-    public void addRedo(JMenu menu) {
+    private void addRedo(JMenu menu) {
         JMenuItem redo = new JMenuItem("Redo");
         redo.addActionListener(e -> {
             graph.redo();
@@ -308,8 +364,13 @@ public class Main extends JFrame {
         changeNodeSize.addActionListener(e -> {
             if (graph.getSelectedNode(false) != null) {
                 graph.getSelectedNode(true).changeDiameter(inc);
-                repaint();
+            } else {
+                if (inc)
+                    graph.incAllNodesSize();
+                else
+                    graph.decAllNodesSize();
             }
+            repaint();
         });
         changeNodeSize.setAccelerator(KeyStroke.getKeyStroke(keyEvent, InputEvent.CTRL_MASK));
         menu.add(changeNodeSize);
