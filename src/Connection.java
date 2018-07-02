@@ -26,11 +26,14 @@ public class Connection {
         double tY = c.targetNode.getY();
         if (c.selected)
             drawColor = Color.red;
-        if (showingPath)
+        double width = c.width;
+        if (showingPath) {
             drawColor = Color.blue;
+            width = 10*width;
+        }
         g.setColor(drawColor);
 
-        BasicStroke stroke = new BasicStroke((int)c.width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
+        BasicStroke stroke = new BasicStroke((int)width, BasicStroke.JOIN_MITER, BasicStroke.JOIN_BEVEL);
         g.setStroke(stroke);
         c.line = new QuadCurve2D.Double();
         c.line.setCurve(sX, sY, (sX > tX) ? (sX + tX) / 2 + arc : (sX + tX) / 2 - arc, (sX > tX) ? (sY + tY) / 2 + arc : (sY + tY) / 2 - arc, tX, tY);

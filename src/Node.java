@@ -57,13 +57,15 @@ public class Node {
                 path.addLast(((Connection) connection).getTargetNode());
                 return path;
             } else {
-                queue.add(((Connection) connection).getTargetNode());
-                allPaths.put(((Connection) connection).getTargetNode(), sourceNode);
+                if (allPaths.get(((Connection) connection).getTargetNode()) == null) {
+                    queue.add(((Connection) connection).getTargetNode());
+                    allPaths.put(((Connection) connection).getTargetNode(), sourceNode);
+                }
             }
         }
 
         while (!queue.isEmpty()) {
-            Node curr = queue.removeFirst();
+            Node curr = queue.pop();
             for (Object connection : curr.connections.values()) {
                 if (((Connection) connection).getTargetNode() == targetNode) {
                     allPaths.put(((Connection) connection).getTargetNode(), curr);
@@ -75,11 +77,14 @@ public class Node {
                     }
                     return path;
                 } else {
-                    queue.add(((Connection) connection).getTargetNode());
-                    allPaths.put(((Connection) connection).getTargetNode(), curr);
+                    if (allPaths.get(((Connection) connection).getTargetNode()) == null) {
+                        queue.add(((Connection) connection).getTargetNode());
+                        allPaths.put(((Connection) connection).getTargetNode(), curr);
+                    }
                 }
             }
         }
+        path.addFirst(sourceNode);
         return path;
     }
 
@@ -92,7 +97,7 @@ public class Node {
         double d = diameter;
         String l = label;
         if (formattingByDegree) {
-            d = diameter + degree/2;
+            d = diameter + degree / 2;
             l = label + " : " + id + " : " + degree;
         }
         circle = new Ellipse2D.Double(x - d / 2, y - d / 2, d, d);
